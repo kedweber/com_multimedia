@@ -31,7 +31,7 @@ defined('KOOWA') or die('Protected resource'); ?>
         <? foreach($videos as $video) : ?>
             <div class="col-sm-4" itemscope itemtype="http://schema.org/VideoObject">
                 <div class="thumbnail">
-                    <a itemprop="url" href="<?= @route('view=video&source=' . KService::get('koowa:filter.slug')->sanitize($video->source) . '&id=' . $video->id . '&slug=' . $video->slug); ?>"><img class="img-responsive" itemprop="thumbnail" src="<?= $video->thumbnail; ?>" /></a>
+                    <a itemprop="url" href="<?= @route('option=com_multimedia&view=video&source=' . KService::get('koowa:filter.slug')->sanitize($video->source) . '&id=' . $video->id . '&slug=' . $video->slug); ?>"><img class="img-responsive" itemprop="thumbnail" src="<?= $video->thumbnail; ?>" /></a>
                     <div class="caption">
                         <h3 itemprop="name"><?= $video->title; ?></h3>
                         <time itemprop="datePublished" datetime="<?= date('Y-m-d', strtotime($video->publish_up)); ?>"><?= @helper('date.humanize', array('date' => $video->publish_up)) ?></time>
