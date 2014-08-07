@@ -1,0 +1,17 @@
+{
+    "name": "cta/multimedia",
+    "type": "joomlatools-installer",
+    "description": "Multimedia Package",
+    "keywords": ["joomla", "featured"],
+    "homepage": "https://github.com/cta-int/multimedia",
+    "authors": [
+        {
+            "name": "Dave Li",
+            "email": "dave@moyoweb.nl",
+            "homepage": "http://www.moyoweb.nl"
+        }
+    ],
+    "require": {
+        "joomlatools/installer": "*"
+    }
+}
