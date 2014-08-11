@@ -15,18 +15,29 @@ class ComMultimediaControllerVideo extends ComDefaultControllerDefault
 {
     protected function _actionImport(KCommandContext $context)
     {
-        $videos = json_decode(file_get_contents('http://vimeo.com/api/v2/channel/web2fordev/videos.json'));
+        $sources = $this->getService('com://admin/multimedia.model.sources')->limit(0)->getList();
 
-        foreach($videos as $video) {
-            $item = $this->getService('com://admin/multimedia.model.videos')->resource_id($video->id)->source('Vimeo')->getItem();
-            $item->setData(array(
-                'thumbnail' => $item->thumbnails['medium'],
-                'enabled' => $item->created_on == '0000-00-00 00:00:00' ? 0 : 1,
-                'publish_up' => $item->created_on,
-                '_new' => 1
-            ));
+        foreach($sources as $source) {
+            $videos = $this->getService('com://admin/multimedia.model.videos')->source($source->slug)->resource_id($source->resource_id)->getList();
+            $videoModel = $this->getService('com://admin/multimedia.model.videos');
 
-            $item->save();
+            foreach($videos as $importedVideo) {
+                $videoModel->reset();
+                $video = $videoModel->resource_id($importedVideo->resource_id)->source($importedVideo->source)->import(0)->getItem();;
+
+                $video->setData(array(
+                    'description'   => $importedVideo->description,
+                    'title'         => $importedVideo->title,
+                    'url'           => $importedVideo->url,
+                    'created_on'    => $importedVideo->created_on,
+                    'publish_up'    => $importedVideo->publish_up,
+                    'thumbnail'     => $importedVideo->thumbnail,
+                    'resource_id'   => $importedVideo->resource_id,
+                    'source'        => $importedVideo->source
+                ));
+
+                $video->save();
+            }
         }
     }
 }
