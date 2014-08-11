@@ -28,52 +28,50 @@ class ComMultimediaAdapterExternalVimeo extends KObject
         $this->_state = $config->state;
     }
 
-    /**
-     * @return object
-     */
-    public function getItem()
+    public function getRow($video)
     {
-        $data = reset(json_decode(file_get_contents('http://vimeo.com/api/v2/video/'.$this->_state->resource_id.'.json')));
-
         $row = $this->getService('com://admin/multimedia.database.row.video');
 
         $row->setData(array(
-            'resource_id' => $this->_state->resource_id,
-            'title' => $data->title,
-            'description' => $data->description,
+            'resource_id' => $video->id,
+            'title' => $video->title,
+            'description' => $video->description,
             'source' => 'Vimeo',
-            'url' => 'https://vimeo.com/'.$this->_state->resource_id,
-            'thumbnail' => $data->thumbnail_medium,
+            'url' => $video->url,
+            'thumbnail' => $video->thumbnail_medium,
             'thumbnails' => array(
-                'small' => $data->thumbnail_small,
-                'medium' => $data->thumbnail_medium,
-                'large' => $data->thumbnail_large,
+                'small' => $video->thumbnail_small,
+                'medium' => $video->thumbnail_medium,
+                'large' => $video->thumbnail_large,
             ),
-            'created_on' => $data->upload_date,
-            '_new'  => false
+            'created_on' => $video->upload_date,
+            'publish_up' => $video->upload_date,
+            '_new'      => false // set false because of ajax action in form (else: 404)
         ));
 
         return $row;
     }
 
+    /**
+     * @return object
+     */
+    public function getItem()
+    {
+        $video = reset(json_decode(file_get_contents('http://vimeo.com/api/v2/video/'.$this->_state->resource_id.'.json')));
+
+        return $this->getRow($video);
+    }
+
     public function getList()
     {
-        $data = reset(json_decode(file_get_contents('http://vimeo.com/api/v2/video/'.$this->_state->resource_id.'.json')));
+        $videos = json_decode(file_get_contents('http://vimeo.com/api/v2/channel/'.$this->_state->resource_id.'/videos.json'));
 
-        $row = $this->getService('com://admin/multimedia.database.row.video');
+        $rows = $this->getService('com://admin/multimedia.database.rowset.videos');
 
-        $row->setData(array(
-            'resource_id' => $this->_state->resource_id,
-            'title' => $data->title,
-            'description' => $data->description,
-            'thumbnails' => array(
-                'small' => $data->thumbnail_small,
-                'medium' => $data->thumbnail_medium,
-                'large' => $data->thumbnail_large,
-            ),
-            '_new'  => false
-        ));
+        foreach ($videos as $video) {
+            $rows->addData(array('data' => $this->getRow($video)));
+        }
 
-        return $row;
+        return $rows;
     }
 }

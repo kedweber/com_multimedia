@@ -11,28 +11,30 @@
 <script>
     jQuery.noConflict()(function($) {
         function getVideo(id, regExp) {
-            var source = $('#source').find(':selected').text(),
-                url = $('#url').val(),
-                match = url.match(regExp)
-            ;
+            var source = $('#source').find(':selected').text();
+            var url = $('#url').val();
+            var match = url.match(regExp);
 
             if (match){
                 $.ajax({
                     type: "GET",
-                    url: "index.php?option=com_multimedia&view=video&resource_id="+ match[id] +"&source="+ source +"&format=json"
+                    url: "index.php?option=com_multimedia&view=video&resource_id="+ match[id] +"&source="+ source +"&import=1&format=json"
                 })
                 .done(function( msg ) {
                     $('#input_title').val(msg.item.title);
-                    //TODO: Make configurable!
                     $('#preview-image').attr('src', msg.item.thumbnails['medium']);
-                    tinyMCE.activeEditor.setContent(msg.item.description);
+                    if (tinyMCE && tinyMCE.get('description')) {
+                        tinyMCE.get('description').setContent(msg.item.description);
+                    }
                     $("#thumbnail").val(msg.item.thumbnails['medium']);
                     $("#resource-id").val(msg.item.resource_id);
+                    $("#publish_up").val(msg.item.publish_up);
+                    $("#created_on").val(msg.item.publish_up);
                 });
             } else {
                 alert('Not a '+ source + ' url');
             }
-        };
+        }
 
         $('#url').on('blur', function() {
             if($(this).val()) {
@@ -156,4 +158,5 @@
     </div>
     <input type="hidden" name="resource_id" id="resource-id" value="<?= $video->resource_id; ?>" />
     <input type="hidden" name="thumbnail" id="thumbnail" value="<?= $video->thumbnail; ?>" />
+    <input type="hidden" name="created_on" id="created_on" value="<?= $video->created_on; ?>" />
 </form>
