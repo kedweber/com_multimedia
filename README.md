@@ -25,16 +25,16 @@ section:
 
 ```json
 {
-    "name": "moyo/mobile_menu",
+    "name": "cta/multimedia",
     "type": "vcs",
-    "url": "https://git.assembla.com/moyo-content.multimedia.git"
+    "url": "https://github.com/cta-int/multimedia.git"
 }
 ```
 
 The require section should contain the following line:
 
 ```json
-    "moyo/multimedia": "1.0.*",
+    "cta/multimedia": "1.0.*",
 ```
 
 Afterward, just run `composer update` from the root of your Joomla project.
