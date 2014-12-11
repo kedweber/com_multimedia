@@ -150,7 +150,15 @@
                 <div class="control-group">
                     <label class="control-label"><?= @text('Regions'); ?></label>
                     <div class="controls">
-                        <?= @helper('com://admin/taxonomy.template.helper.listbox.taxonomies', array('identifier' => 'com://admin/regions.model.regions', 'name' => 'regions[]', 'attribs' => array('multiple' => true, 'size' => 10), 'type' => 'region', 'relation' => 'ancestors')); ?>
+                        <?= @helper('com://admin/taxonomy.template.helper.listbox.taxonomies', array(
+                            'identifier' => 'com://admin/regions.model.regions',
+                            'name' => 'regions[]',
+                            'deselect' => false,
+                            'selected' => $video->regions ? $video->regions->getColumn('id') : array(),
+                            'attribs' => array('multiple' => true, 'size' => 10, 'data-placeholder' => @text('Select regions&hellip;')),
+                            'type' => 'region',
+                            'relation' => 'ancestors'
+                        )); ?>
                     </div>
                 </div>
             </fieldset>

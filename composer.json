@@ -2,7 +2,7 @@
     "name": "cta/multimedia",
     "type": "joomlatools-installer",
     "description": "Multimedia Package",
-    "keywords": ["joomla", "featured"],
+    "keywords": ["joomla", "nooku","multimedia"],
     "homepage": "https://github.com/cta-int/multimedia",
     "authors": [
         {
