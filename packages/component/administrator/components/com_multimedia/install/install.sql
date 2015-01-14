@@ -1,8 +1,7 @@
 -- ----------------------------
 --  Table structure for `#__multimedia_sources`
 -- ----------------------------
-DROP TABLE IF EXISTS `#__multimedia_sources`;
-CREATE TABLE `#__multimedia_sources` (
+CREATE TABLE IF NOT EXISTS `#__multimedia_sources` (
   `multimedia_source_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
@@ -19,8 +18,7 @@ CREATE TABLE `#__multimedia_sources` (
 -- ----------------------------
 --  Table structure for `#__multimedia_videos`
 -- ----------------------------
-DROP TABLE IF EXISTS `#__multimedia_videos`;
-CREATE TABLE `#__multimedia_videos` (
+CREATE TABLE IF NOT EXISTS `#__multimedia_videos` (
   `multimedia_video_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `resource_id` varchar(20) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
