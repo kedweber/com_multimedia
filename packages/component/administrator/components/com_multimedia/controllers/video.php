@@ -8,7 +8,7 @@
  * @subpackage  ...
  * @uses        Com_
  */
- 
+
 defined('KOOWA') or die('Protected resource');
 
 class ComMultimediaControllerVideo extends ComDefaultControllerDefault
@@ -23,7 +23,7 @@ class ComMultimediaControllerVideo extends ComDefaultControllerDefault
 
             foreach($videos as $importedVideo) {
                 $videoModel->reset();
-                $video = $videoModel->resource_id($importedVideo->resource_id)->source($importedVideo->source)->import(0)->getItem();;
+                $video = $videoModel->resource_id($importedVideo->resource_id)->source($importedVideo->source)->import(0)->getItem();
 
                 $video->setData(array(
                     'description'   => $importedVideo->description,
@@ -32,7 +32,7 @@ class ComMultimediaControllerVideo extends ComDefaultControllerDefault
                     'created_on'    => $importedVideo->created_on,
                     'publish_up'    => $importedVideo->publish_up,
                     'thumbnail'     => $importedVideo->thumbnail,
-                    'resource_id'   => $importedVideo->resource_id,
+                    'resource_id'   => $importedVideo->resource_id ? $importedVideo->resource_id : $importedVideo->id,
                     'source'        => $importedVideo->source
                 ));
 
