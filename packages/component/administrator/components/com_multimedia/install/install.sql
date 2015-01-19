@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS `#__multimedia_sources` (
   `modified_by` int(11) NOT NULL DEFAULT '0',
   `locked_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `locked_by` int(11) NOT NULL DEFAULT '0',
+  `resource_id` varchar(255) NOT NULL,
   PRIMARY KEY (`multimedia_source_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
