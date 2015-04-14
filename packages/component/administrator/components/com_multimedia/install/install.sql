@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS `#__multimedia_sources` (
   `locked_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `locked_by` int(11) NOT NULL DEFAULT '0',
   `resource_id` varchar(255) NOT NULL,
+  `adapter` varchar(255) NOT NULL,
   PRIMARY KEY (`multimedia_source_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -39,6 +40,8 @@ CREATE TABLE IF NOT EXISTS `#__multimedia_videos` (
   `modified_by` int(11) NOT NULL DEFAULT '0',
   `locked_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `locked_by` int(11) NOT NULL DEFAULT '0',
+  `meta_description` varchar(255) DEFAULT NULL,
+  `meta_keywords` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`multimedia_video_id`),
   UNIQUE KEY `unique` (`resource_id`,`source`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
