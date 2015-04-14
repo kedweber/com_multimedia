@@ -42,6 +42,13 @@
                 </div>
             </div>
 
+            <div class="control-group">
+                <label class="control-label"><?= @text('Media Import Adapter'); ?></label>
+                <div class="controls">
+                    <?= @helper('listbox.adapters', array('selected' => $source->adapter)); ?>
+                </div>
+            </div>
+
             <? if(!$source->original) : ?>
                 <div class="control-group">
                     <label class="control-label"><?= @text('Translated'); ?></label>
