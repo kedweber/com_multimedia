@@ -1,4 +1,4 @@
-# Moyo Multimedia Manager
+# Moyo Multimedia Manager \(com_multimedia\)
 
 ## Introduction
 

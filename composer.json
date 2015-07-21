@@ -1,9 +1,9 @@
 {
-    "name": "cta/multimedia",
+    "name": "moyo/multimedia",
     "type": "joomlatools-installer",
     "description": "Multimedia Package",
     "keywords": ["joomla", "nooku","multimedia"],
-    "homepage": "https://github.com/cta-int/multimedia",
+    "homepage": "https://github.com/kedweber/multimedia",
     "authors": [
         {
             "name": "Dave Li",
