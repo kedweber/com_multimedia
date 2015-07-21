@@ -33,19 +33,41 @@ class ComMultimediaAdapterExternalYoutube extends KObject
      */
     public function getItem()
     {
-        $data = json_decode(file_get_contents('http://gdata.youtube.com/feeds/api/videos/'.$this->_state->resource_id.'?v=2&alt=jsonc'))->data;
+        $video = json_decode(file_get_contents('http://gdata.youtube.com/feeds/api/videos/'.$this->_state->resource_id.'?v=2&alt=jsonc'))->data->items[0];
 
+        return $this->_getRow($video);
+    }
+
+    public function getList()
+    {
+        $videos = json_decode(file_get_contents('http://gdata.youtube.com/feeds/api/videos/?author='.$this->_state->resource_id.'&v=2&alt=jsonc'))->data->items;
+        $rowset = $this->getService('com://admin/multimedia.database.rowset.videos');
+
+        foreach ($videos as $video) {
+            $rowset->addData(array('data' => $this->_getRow($video)));
+        }
+
+        return $rowset;
+    }
+
+    private function _getRow($video)
+    {
         $row = $this->getService('com://admin/multimedia.database.row.video');
-
+        
         $row->setData(array(
-            'resource_id' => $this->_state->resource_id,
-            'title' => $data->title,
-            'description' => $data->description,
+            'resource_id' => $video->id,
+            'title' => $video->title,
+            'description' => $video->description,
+            'source' => 'Youtube',
+            'url' => $video->content->{5},
+            'thumbnail' => $video->thumbnail->sqDefault,
             'thumbnails' => array(
-                'small' => $data->thumbnail->sqDefault,
-                'large' => $data->thumbnail->hqDefault,
+                'small' => $video->thumbnail->sqDefault,
+                'large' => $video->thumbnail->hqDefault,
             ),
-            '_new'  => false
+            'created_on' => $video->uploaded,
+            'publish_up' => $video->updated,
+            '_new'      => false // set false because of ajax action in form (else: 404)
         ));
 
         return $row;

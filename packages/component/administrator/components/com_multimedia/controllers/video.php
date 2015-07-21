@@ -18,7 +18,7 @@ class ComMultimediaControllerVideo extends ComDefaultControllerDefault
         $sources = $this->getService('com://admin/multimedia.model.sources')->limit(0)->getList();
 
         foreach($sources as $source) {
-            $videos = $this->getService('com://admin/multimedia.model.videos')->source($source->slug)->resource_id($source->resource_id)->getList();
+            $videos = $this->getService('com://admin/multimedia.model.videos')->source($source->adapter)->resource_id($source->resource_id)->getList();
             $videoModel = $this->getService('com://admin/multimedia.model.videos');
 
             foreach($videos as $importedVideo) {
@@ -33,7 +33,9 @@ class ComMultimediaControllerVideo extends ComDefaultControllerDefault
                     'publish_up'    => $importedVideo->publish_up,
                     'thumbnail'     => $importedVideo->thumbnail,
                     'resource_id'   => $importedVideo->resource_id ? $importedVideo->resource_id : $importedVideo->id,
-                    'source'        => $importedVideo->source
+                    'source'        => $importedVideo->source,
+                    'meta_description' => $video->meta_description ? $video->meta_description : $importedVideo->meta_description,
+                    'meta_keywords' => $video->meta_keywords ? $video->meta_keywords: $importedVideo->meta_keywords
                 ));
 
                 $video->save();

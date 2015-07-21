@@ -30,4 +30,30 @@ class ComMultimediaTemplateHelperListbox extends ComDefaultTemplateHelperListbox
 
         return parent::_listbox($config);
     }
+
+    public function adapters($config = array())
+    {
+        $config = new KConfig($config);
+        $config->append(array(
+            'value' => 'value',
+            'text' => 'text',
+            'name' => 'adapter',
+            'options' => array(
+                array(
+                    'text' => 'Please select your adapter',
+                    'value' => null
+                ),
+                array(
+                    'text' => 'YouTube',
+                    'value' => 'youtube'
+                ),
+                array(
+                    'text' => 'Vimeo',
+                    'value' => 'vimeo'
+                )
+            )
+        ));
+
+        return parent::optionlist($config);
+    }
 }

@@ -29,6 +29,8 @@
 
     <administration>
         <files folder="administrator/components/com_multimedia">
+            <file>access.xml</file>
+            <file>config.xml</file>
             <file>dispatcher.php</file>
             <file>multimedia.php</file>
 
